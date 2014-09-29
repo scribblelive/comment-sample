@@ -1,0 +1,237 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Sample Page</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="comments.js"></script>
+
+    <style type="text/css">
+        body
+        {
+            background-color: #FFF;
+        }
+
+        #scrb-comment
+        {
+            margin: 0px;
+            width: 280px;
+            height: 111px;
+        }
+
+        .scrb-title
+        {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .scrb-subtitle
+        {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .scrb-container
+        {
+            padding: 10px;
+        }
+
+        #scribbleComments
+        {
+            width: 300px;
+            margin: auto;
+            border: solid 1px #919191;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            font-family: Helvetica,Arial,sans-serif;
+            padding: 20px;
+            background-color: #FFF;
+        }
+
+        #scrb-name
+        {
+            width: 232px;
+        }
+
+        #submitBtn
+        {
+            width: 100px;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:10px;
+            border: solid 1px #919191;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            text-align: center;
+            padding: 5px;
+            background-color: #ECECEC;
+        }
+
+        #submitBtn:hover
+        {
+            background-color: #FFF;
+            cursor: pointer;
+        }
+
+        #scrb-msg
+        {
+            font-size: 12px;
+            text-align: center;
+            color: #919191;
+        }
+
+        .uploadContainer
+        {
+            margin-top: 10px;
+        }
+
+        .uploadContainer .scrb-container
+        {
+            border: solid 1px #C5C5C5;
+            border-top: none;
+        }
+
+        .tabContainer
+        {
+            border-bottom: solid 1px #C5C5C5;
+        }
+
+        .tabContainer div
+        {
+            border: solid 1px #C5C5C5;
+            border-bottom: none;
+            display: inline-block;
+            padding: 5px;
+            background-color: #ECECEC;
+        }
+
+        .tabContainer div.selected
+        {
+            background-color: #FFF;
+        }
+
+        .tabContainer div:hover
+        {
+            background-color: #FFF;
+            cursor: pointer;
+        }
+
+        .containerHidden
+        {
+            display: none;
+        }
+
+        .unavailable
+        {
+            display:none;
+            padding: 10px;
+        }
+
+        .imgPrev
+        {
+            width: 100%;
+        }
+
+        #imgRmv,
+        #aviRmv
+        {
+            font-size: 12px;
+            color: #ff0000;
+            display: none;
+        }
+
+        #imgRmv:hover,
+        #aviRmv:hover
+        {
+            cursor: pointer;
+        }
+    </style>
+
+    <!-- start up comment engine -->
+    <script type="text/javascript">
+        $(window).load(function () {
+            // check if we have html 5 capabilities
+            if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+                $('.scrb-container, .uploadContainer, #submitBtn').hide();
+                $('.unavailable').show();
+            } else {
+                new commentEngine({
+                    token: "Egbfa3a7",
+                    threadId: "851558",
+                    idName: "#scrb-name",
+                    idComment: "#scrb-comment",
+                    idSubmit: "#submitBtn",
+                    idMsg: "#scrb-msg",
+                    idAvi: "#scrb-avi",
+                    idImg: "#scrb-img",
+                    previewClass: ".imgPrev",
+                    previewRmv: "#imgRmv",
+                    aviRmv: "#aviRmv"
+                });
+            }
+        });
+
+        function imgClick(e) {
+            $('.tabContainer div').removeClass('selected');
+            $(e).addClass('selected');
+            $('#textCommentBox').hide();
+            $('#imgCommentBox').show();
+        }
+
+        function txtClick(e) {
+            $('.tabContainer div').removeClass('selected');
+            $(e).addClass('selected');
+            $('#imgCommentBox').hide();
+            $('#textCommentBox').show();
+            $('#scrb-img').val('');
+            $(".imgPrev").remove();
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1><div style="text-align:center">My fancy page</div></h1>
+        <div>
+            <div><img src="http://scontent-a.cdninstagram.com/hphotos-xaf1/t51.2885-15/10691922_712035682218782_2145014013_s.jpg"></div>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+        </div>
+    </div>
+    <hr />
+    <div id="scribbleComments">
+        <div class="scrb-title">Submit a Comment</div>
+        <div id="scrb-msg">
+        </div>
+        <div class="scrb-container">
+            <span class="scrb-subtitle">Name:</span>
+            <span><input type="text" placeholder="Name (optional)" id="scrb-name" /></span>
+        </div>
+        <div class="scrb-container">
+            <span class="scrb-subtitle">Avatar (optional):</span>
+            <span id="aviRmv">[x] remove</span>
+            <span><input type="file" id="scrb-avi" /></span>
+        </div>
+        <div class="uploadContainer">
+            <div class="tabContainer">
+                <div class="selected" onclick="txtClick(this);">Text</div>
+                <div onclick="imgClick(this);">Image</div>
+            </div>
+            <div id="textCommentBox" class="scrb-container">
+                <div class="scrb-subtitle">Comment:</div>
+                <div>
+                    <textarea placeholder="Please enter your comment here." id="scrb-comment"></textarea>
+                </div>
+            </div>
+            <div id="imgCommentBox" class="scrb-container containerHidden">
+                <span class="scrb-subtitle">Image:</span>
+                <span id="imgRmv">[x] remove</span>
+                <span><input type="file" accept="image/*" id="scrb-img" /></span>
+            </div>
+        </div>
+        <div id="submitBtn">
+            Submit
+        </div>
+        <div class="unavailable"><i>HTML5 is not fully supported on your browser. You need to use a browser with these capabilities to submit a comment.</i></div>
+    </div>
+</body>
+</html>
