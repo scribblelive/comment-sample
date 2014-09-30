@@ -255,7 +255,7 @@ function txtClick(e) {
 ```
 
 ##Widget HTML Definition
-The widget itself is a fairly simple structure of containers and a few input files. You can add the following code unmodified to your page or change how and where the different containers behave. If you modify the containers and general look and feel please remember to map any of those changed back to the comment widget initialization.
+The widget itself is a fairly simple structure of containers and a few input tags. You can add the following code unmodified to your page or change how and where the different containers behave. If you modify the containers and general look and feel please remember to map any of those changed back to the comment widget initialization.
 
 ```HTML
 <div id="scribbleComments">
