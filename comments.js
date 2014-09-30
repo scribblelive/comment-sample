@@ -36,7 +36,7 @@ function commentEngine(opts) {
     // attach avatar file image listener
     $(this.opts.idAvi).change(function (evt) {
         var files = evt.target.files;
-        debugger;
+        
         // check if there was a file that was selected
         if (files.length == 0) {
             return;
@@ -75,7 +75,7 @@ function commentEngine(opts) {
 
     // attach comment file image listener
     $(this.opts.idImg).change(function (evt) {
-        debugger;
+        
         var files = evt.target.files;
 
         // check if there was a file that was selected
@@ -118,7 +118,7 @@ commentEngine.prototype.sendComment = function () {
         username = $(this.opts.idName).val().trim(),
         comment = $(this.opts.idComment).val().trim(),
         file = $(this.opts.idImg)[0].files;
-    debugger;
+    
     // check if we are uploading an image
     if (typeof file !== "undefined" && file.length == 1) {
         comment = file[0];
