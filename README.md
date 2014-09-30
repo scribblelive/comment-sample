@@ -4,158 +4,169 @@ This widget allows users to submit comments to an event from either a stand alon
 
 The html, css, and javascript code can be placed in any page or the top or bottom html of a Scribblelive whitelabel. In order to operate this widget you will need a Scribblelive API token and the id of an Event where the comments will be submitted to.
 
+<p align="center">
+<img src="http://customerfiles.scribblelive.com.s3.amazonaws.com/commentswidget/commentScreen.png" align="middle"/>
+</p>
+
 **__Creator: Natalia Bogdan__**
 
 ##Widget Requirements
 This widget requires JQuery to be defined on the page where it is being used and for a browser that supports HTML5. The image and avatar uploads require the HTML5 file upload functinality.
 
+To include JQuery and the commenting engine file please add the following to the head definition of your page or the top html of your event:
+
+```HTML
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="comments.js"></script>
+```
+
 ##Widget Styling
-The css for the look and feel of the widget is included in the sample.html file. If you wish to change the look and feel of the widget please feel free to modify the styles. Please leave the assigned classes and ids as they are. Some of the Javascript relies on specific ids. You can freely add your own classes and include them in the class list for the element that you wish to modify.
+The css for the look and feel of the widget is included in the sample.html file. If you wish to change the look and feel of the widget please feel free to modify the styles. Please leave the assigned classes and ids as they are. Some of the Javascript relies on specific ids. You can freely add your own classes and include them in the class list for the element that you wish to modify. If you decide you need to change some of the ids or classes please make sure that they are passed properly to the comment engive via the javascript initialization below.
 
 ```HTML
 <style type="text/css">
-        body
-        {
-            background-color: #FFF;
-        }
+body
+{
+    background-color: #FFF;
+}
 
-        #scrb-comment
-        {
-            margin: 0px;
-            width: 280px;
-            height: 111px;
-        }
+#scrb-comment
+{
+    margin: 0px;
+    width: 280px;
+    height: 111px;
+}
 
-        .scrb-title
-        {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-        }
+.scrb-title
+{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
 
-        .scrb-subtitle
-        {
-            font-size: 14px;
-            font-weight: bold;
-        }
+.scrb-subtitle
+{
+    font-size: 14px;
+    font-weight: bold;
+}
 
-        .scrb-container
-        {
-            padding: 10px;
-        }
+.scrb-container
+{
+    padding: 10px;
+}
 
-        #scribbleComments
-        {
-            width: 300px;
-            margin: auto;
-            border: solid 1px #919191;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-            border-radius: 10px;
-            font-family: Helvetica,Arial,sans-serif;
-            padding: 20px;
-            background-color: #FFF;
-        }
+#scribbleComments
+{
+    width: 300px;
+    margin: auto;
+    border: solid 1px #919191;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    font-family: Helvetica,Arial,sans-serif;
+    padding: 20px;
+    background-color: #FFF;
+}
 
-        #scrb-name
-        {
-            width: 232px;
-        }
+#scrb-name
+{
+    width: 232px;
+}
 
-        #submitBtn
-        {
-            width: 100px;
-            margin-left:auto;
-            margin-right:auto;
-            margin-top:10px;
-            border: solid 1px #919191;
-            -webkit-border-radius: 4px;
-            -moz-border-radius: 4px;
-            border-radius: 4px;
-            text-align: center;
-            padding: 5px;
-            background-color: #ECECEC;
-        }
+#submitBtn
+{
+    width: 100px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10px;
+    border: solid 1px #919191;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 5px;
+    background-color: #ECECEC;
+}
 
-        #submitBtn:hover
-        {
-            background-color: #FFF;
-            cursor: pointer;
-        }
+#submitBtn:hover
+{
+    background-color: #FFF;
+    cursor: pointer;
+}
 
-        #scrb-msg
-        {
-            font-size: 12px;
-            text-align: center;
-            color: #919191;
-        }
+#scrb-msg
+{
+    font-size: 12px;
+    text-align: center;
+    color: #919191;
+}
 
-        .uploadContainer
-        {
-            margin-top: 10px;
-        }
+.uploadContainer
+{
+    margin-top: 10px;
+}
 
-        .uploadContainer .scrb-container
-        {
-            border: solid 1px #C5C5C5;
-            border-top: none;
-        }
+.uploadContainer .scrb-container
+{
+    border: solid 1px #C5C5C5;
+    border-top: none;
+}
 
-        .tabContainer
-        {
-            border-bottom: solid 1px #C5C5C5;
-        }
+.tabContainer
+{
+    border-bottom: solid 1px #C5C5C5;
+}
 
-        .tabContainer div
-        {
-            border: solid 1px #C5C5C5;
-            border-bottom: none;
-            display: inline-block;
-            padding: 5px;
-            background-color: #ECECEC;
-        }
+.tabContainer div
+{
+    border: solid 1px #C5C5C5;
+    border-bottom: none;
+    display: inline-block;
+    padding: 5px;
+    background-color: #ECECEC;
+}
 
-        .tabContainer div.selected
-        {
-            background-color: #FFF;
-        }
+.tabContainer div.selected
+{
+    background-color: #FFF;
+}
 
-        .tabContainer div:hover
-        {
-            background-color: #FFF;
-            cursor: pointer;
-        }
+.tabContainer div:hover
+{
+    background-color: #FFF;
+    cursor: pointer;
+}
 
-        .containerHidden
-        {
-            display: none;
-        }
+.containerHidden
+{
+    display: none;
+}
 
-        .unavailable
-        {
-            display:none;
-            padding: 10px;
-        }
+.unavailable
+{
+    display:none;
+    padding: 10px;
+}
 
-        .imgPrev
-        {
-            width: 100%;
-        }
+.imgPrev
+{
+    width: 100%;
+}
 
-        #imgRmv,
-        #aviRmv
-        {
-            font-size: 12px;
-            color: #ff0000;
-            display: none;
-        }
+#imgRmv,
+#aviRmv
+{
+    font-size: 12px;
+    color: #ff0000;
+    display: none;
+}
 
-        #imgRmv:hover,
-        #aviRmv:hover
-        {
-            cursor: pointer;
-        }
-    </style>
+#imgRmv:hover,
+#aviRmv:hover
+{
+    cursor: pointer;
+}
+</style>
 ```
 
 ##Widget Initialization
@@ -163,27 +174,27 @@ To set up the widget on your page you will need to at a javascript call once the
 
 ```HTML
 <script type="text/javascript">
-        $(window).load(function () {
-            // check if we have html 5 capabilities
-            if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-                $('.scrb-container, .uploadContainer, #submitBtn').hide();
-                $('.unavailable').show();
-            } else {
-                new commentEngine({
-                    token: "YOURTOKEN",
-                    threadId: "YOURTHREADID",
-                    idName: "#scrb-name",
-                    idComment: "#scrb-comment",
-                    idSubmit: "#submitBtn",
-                    idMsg: "#scrb-msg",
-                    idAvi: "#scrb-avi",
-                    idImg: "#scrb-img",
-                    previewClass: ".imgPrev",
-                    previewRmv: "#imgRmv",
-                    aviRmv: "#aviRmv"
-                });
-            }
+$(window).load(function () {
+    // check if we have html 5 capabilities
+    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+        $('.scrb-container, .uploadContainer, #submitBtn').hide();
+        $('.unavailable').show();
+    } else {
+        new commentEngine({
+            token: "YOURTOKEN",
+            threadId: "YOURTHREADID",
+            idName: "#scrb-name",
+            idComment: "#scrb-comment",
+            idSubmit: "#submitBtn",
+            idMsg: "#scrb-msg",
+            idAvi: "#scrb-avi",
+            idImg: "#scrb-img",
+            previewClass: ".imgPrev",
+            previewRmv: "#imgRmv",
+            aviRmv: "#aviRmv"
         });
+    }
+});
 </script>
 ```
 
@@ -225,60 +236,61 @@ The default widget is styled to have a tabbed appearance to allow the user to ch
 
 ```HTML
 <script type="text/javascript">
-        function imgClick(e) {
-            $('.tabContainer div').removeClass('selected');
-            $(e).addClass('selected');
-            $('#textCommentBox').hide();
-            $('#imgCommentBox').show();
-        }
+function imgClick(e) {
+    $('.tabContainer div').removeClass('selected');
+    $(e).addClass('selected');
+    $('#textCommentBox').hide();
+    $('#imgCommentBox').show();
+}
 
-        function txtClick(e) {
-            $('.tabContainer div').removeClass('selected');
-            $(e).addClass('selected');
-            $('#imgCommentBox').hide();
-            $('#textCommentBox').show();
-            $('#scrb-img').val('');
-            $(".imgPrev").remove();
-        }
+function txtClick(e) {
+    $('.tabContainer div').removeClass('selected');
+    $(e).addClass('selected');
+    $('#imgCommentBox').hide();
+    $('#textCommentBox').show();
+    $('#scrb-img').val('');
+    $(".imgPrev").remove();
+}
 </script>
 ```
 
 ##Widget HTML Definition
 The widget itself is a fairly simple structure of containers and a few input files. You can add the following code unmodified to your page or change how and where the different containers behave. If you modify the containers and general look and feel please remember to map any of those changed back to the comment widget initialization.
+
 ```HTML
-    <div id="scribbleComments">
-        <div class="scrb-title">Submit a Comment</div>
-        <div id="scrb-msg">
-        </div>
-        <div class="scrb-container">
-            <span class="scrb-subtitle">Name:</span>
-            <span><input type="text" placeholder="Name (optional)" id="scrb-name" /></span>
-        </div>
-        <div class="scrb-container">
-            <span class="scrb-subtitle">Avatar (optional):</span>
-            <span id="aviRmv">[x] remove</span>
-            <span><input type="file" id="scrb-avi" /></span>
-        </div>
-        <div class="uploadContainer">
-            <div class="tabContainer">
-                <div class="selected" onclick="txtClick(this);">Text</div>
-                <div onclick="imgClick(this);">Image</div>
-            </div>
-            <div id="textCommentBox" class="scrb-container">
-                <div class="scrb-subtitle">Comment:</div>
-                <div>
-                    <textarea placeholder="Please enter your comment here." id="scrb-comment"></textarea>
-                </div>
-            </div>
-            <div id="imgCommentBox" class="scrb-container containerHidden">
-                <span class="scrb-subtitle">Image:</span>
-                <span id="imgRmv">[x] remove</span>
-                <span><input type="file" accept="image/*" id="scrb-img" /></span>
-            </div>
-        </div>
-        <div id="submitBtn">
-            Submit
-        </div>
-        <div class="unavailable"><i>HTML5 is not fully supported on your browser. You need to use a browser with these capabilities to submit a comment.</i></div>
+<div id="scribbleComments">
+<div class="scrb-title">Submit a Comment</div>
+<div id="scrb-msg">
+</div>
+<div class="scrb-container">
+    <span class="scrb-subtitle">Name:</span>
+    <span><input type="text" placeholder="Name (optional)" id="scrb-name" /></span>
+</div>
+<div class="scrb-container">
+    <span class="scrb-subtitle">Avatar (optional):</span>
+    <span id="aviRmv">[x] remove</span>
+    <span><input type="file" id="scrb-avi" /></span>
+</div>
+<div class="uploadContainer">
+    <div class="tabContainer">
+        <div class="selected" onclick="txtClick(this);">Text</div>
+        <div onclick="imgClick(this);">Image</div>
     </div>
+    <div id="textCommentBox" class="scrb-container">
+        <div class="scrb-subtitle">Comment:</div>
+        <div>
+            <textarea placeholder="Please enter your comment here." id="scrb-comment"></textarea>
+        </div>
+    </div>
+    <div id="imgCommentBox" class="scrb-container containerHidden">
+        <span class="scrb-subtitle">Image:</span>
+        <span id="imgRmv">[x] remove</span>
+        <span><input type="file" accept="image/*" id="scrb-img" /></span>
+    </div>
+</div>
+<div id="submitBtn">
+    Submit
+</div>
+<div class="unavailable"><i>HTML5 is not fully supported on your browser. You need to use a browser with these capabilities to submit a comment.</i></div>
+</div>
 ```
