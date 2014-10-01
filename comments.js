@@ -121,7 +121,7 @@ commentEngine.prototype.sendComment = function () {
     
     // check if we are uploading an image
     if (typeof file !== "undefined" && file.length == 1) {
-        comment = file[0];
+        file = file[0];
     }
 
     // check to make sure comment isn't empty. Name can be empty and will be set to "Anonymous User"
@@ -129,7 +129,7 @@ commentEngine.prototype.sendComment = function () {
         username = "Anonymous User";
     }
 
-    if (comment.length == 0) {
+    if (comment.length == 0 && file === "undefined" ) {
         alert("Please fill out a comment before submitting.");
         return;
     }
@@ -150,8 +150,9 @@ commentEngine.prototype.sendComment = function () {
                     success: function (data, textStatus, XMLHttpRequest) {
                         // send in the post
                         var filedata = new FormData();
-                        if (typeof comment !== "string") {
-                            filedata.append('file', comment);
+                        if (typeof file !== "undefined") {
+                            filedata.append('file', file);
+                            filedata.append('Content', comment);
                         } else {
                             filedata.append('Content', comment);
                         }
