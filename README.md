@@ -239,7 +239,6 @@ The default widget is styled to have a tabbed appearance to allow the user to ch
 function imgClick(e) {
     $('.tabContainer div').removeClass('selected');
     $(e).addClass('selected');
-    $('#textCommentBox').hide();
     $('#imgCommentBox').show();
 }
 
