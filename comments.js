@@ -4,12 +4,13 @@ Title: ScribbleLive Comment Script
 Description: This script allows users to leave comments on any page that using the scribble api. An event must be dedicated to contain user comments.
 
 */
-var defaults = {
-    apiEndPoint: "http://apiv1.scribblelive.com",
-    avatar: ""
-};
-
 function commentEngine(opts) {
+	
+	var defaults = {
+	    apiEndPoint: "http://apiv1.scribblelive.com",
+	    avatar: ""
+	};	
+	
     var that = this;
     this.opts = $.extend({}, defaults, opts);
 
